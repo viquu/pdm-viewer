@@ -5,7 +5,7 @@ import java.io.File;
 import javax.swing.filechooser.FileFilter;
 
 /**
- * 支持处理文件过滤
+ * 支pdm鏍煎紡杩囨护
  * 
  * @author yjgoo
  * 
