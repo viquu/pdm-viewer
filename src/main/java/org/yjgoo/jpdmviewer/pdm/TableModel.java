@@ -18,6 +18,7 @@ public class TableModel {
 	private String creator;
 	private String modificationDate;
 	private String modifier;
+	private String comment;
 	private List<ColumnModel> cols = new ArrayList<ColumnModel>();
 	private List<KeyModel> keys = new ArrayList<KeyModel>();
 	// saved id reference
@@ -115,4 +116,11 @@ public class TableModel {
 		this.modifier = modifier;
 	}
 
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
 }

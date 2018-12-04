@@ -48,6 +48,7 @@ public class PDMFileModel {
 			tm.setCreator(t.elementText("Creator"));
 			tm.setModificationDate(t.elementText("ModificationDate"));
 			tm.setModifier(t.elementText("Modifier"));
+			tm.setComment(t.elementText("Comment"));
 			// System.out.println(t.asXML());
 			eCols = t.element("Columns");
 			if (eCols != null) {

@@ -24,6 +24,7 @@ public class TableInfoPanel extends JTabbedPane {
 	private JTextArea sqlTextArea;
 	private JTextField tableNameTf;
 	private JTextField tableCodeTf;
+    private JTextField tableCommentTf;
 	private JTextArea commentTa;
 	private TableModel tm;
 	private BeanConvertorPanel beanConvertorPanel;
@@ -34,7 +35,8 @@ public class TableInfoPanel extends JTabbedPane {
 		sqlTextArea = new JTextArea();
 		tableNameTf = new JTextField();
 		tableCodeTf = new JTextField();
-		commentTa = new JTextArea();
+        tableCommentTf = new JTextField();
+        commentTa = new JTextArea();
 
 		JPanel tableBase = new JPanel(new BorderLayout());
 		tableBase.add(new JScrollPane(modelTable));
@@ -44,6 +46,7 @@ public class TableInfoPanel extends JTabbedPane {
 				BoxLayout.Y_AXIS));
 		tableBaseFields.add(tableNameTf);
 		tableBaseFields.add(tableCodeTf);
+        tableBaseFields.add(tableCommentTf);
 		tableBase.add(tableBaseFields, BorderLayout.NORTH);
 
 		JPanel commentPanel = new JPanel();
@@ -86,6 +89,7 @@ public class TableInfoPanel extends JTabbedPane {
 		this.tm = tm;
 		tableNameTf.setText(tm.getName());
 		tableCodeTf.setText(tm.getCode());
+        tableCommentTf.setText(tm.getComment());
 		CreateTableDDLGenerator g = new CreateTableDDLGenerator();
 		this.sqlTextArea.setText(g.convert(tm));
 		modelTable.showModel(tm);
