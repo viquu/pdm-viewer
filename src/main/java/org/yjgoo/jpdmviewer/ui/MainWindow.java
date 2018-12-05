@@ -1,16 +1,13 @@
 package org.yjgoo.jpdmviewer.ui;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
+import java.awt.*;
 import java.awt.dnd.DnDConstants;
 import java.awt.dnd.DropTarget;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.File;
 
-import javax.swing.JFrame;
-import javax.swing.JScrollPane;
-import javax.swing.ScrollPaneConstants;
+import javax.swing.*;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 
@@ -20,6 +17,7 @@ import org.yjgoo.jpdmviewer.pdm.TableModel;
 import org.yjgoo.jpdmviewer.ui.menu.MainMenu;
 import org.yjgoo.jpdmviewer.ui.pdm.ModelTree;
 import org.yjgoo.jpdmviewer.ui.pdm.ModelTreeNode;
+import org.yjgoo.jpdmviewer.ui.pdm.TableListPanel;
 import org.yjgoo.jpdmviewer.ui.pdm.TableInfoPanel;
 
 /**
@@ -30,21 +28,17 @@ import org.yjgoo.jpdmviewer.ui.pdm.TableInfoPanel;
  */
 public class MainWindow extends JFrame {
 	private static final long serialVersionUID = 5212714499914863032L;
-	private ModelTree modelTree;
-	private TableInfoPanel tablePanel;
+    private TableListPanel tableListPanel;
+    private TableInfoPanel tablePanel;
 
 	public MainWindow() {
 		this.setBounds(100, 100, 1000, 600);
 		this.setTitle("PDM-Viewer V0.1a");
 		this.addWindowListener(new WindowListenerHandler());
 		this.setMenuBar(new MainMenu(this));
-		int v = ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED;
-		int h = ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED;
-		this.modelTree = new ModelTree();
-		JScrollPane jScrollTree = new JScrollPane(v, h);
-		jScrollTree.getViewport().add(modelTree);
-		jScrollTree.setPreferredSize(new Dimension(200, 100));
-		this.getContentPane().add(jScrollTree, BorderLayout.WEST);
+
+        this.tableListPanel = new TableListPanel();
+        this.getContentPane().add(tableListPanel, BorderLayout.WEST);
 
 		tablePanel = new TableInfoPanel();
 		this.getContentPane().add(tablePanel, BorderLayout.CENTER);
@@ -56,17 +50,17 @@ public class MainWindow extends JFrame {
 	}
 
 	private void addEvents() {
-		modelTree.addTreeSelectionListener(new TreeSelectionListener() {
+        this.tableListPanel.getModelTree().addTreeSelectionListener(new TreeSelectionListener() {
 
-			public void valueChanged(TreeSelectionEvent e) {
-				ModelTreeNode node = (ModelTreeNode) modelTree
-						.getLastSelectedPathComponent();
-				TableModel tm;
-				if (node != null && node.getData() != null
-						&& node.getData() instanceof TableModel) {
-					tm = (TableModel) node.getData();
-					tablePanel.showModel(tm);
-				}
+            public void valueChanged(TreeSelectionEvent e) {
+                ModelTreeNode node = (ModelTreeNode) tableListPanel.getModelTree()
+                        .getLastSelectedPathComponent();
+                TableModel tm;
+                if (node != null && node.getData() != null
+                        && node.getData() instanceof TableModel) {
+                    tm = (TableModel) node.getData();
+                    tablePanel.showModel(tm);
+                }
 			}
 		});
 	}
@@ -75,8 +69,9 @@ public class MainWindow extends JFrame {
 		PDMFileModel model;
 		try {
 			model = PDMFileModel.loadFile(file);
-			this.modelTree.refreshModel(model);
-		} catch (DocumentException e) {
+            ModelTree modelTree = this.tableListPanel.getModelTree();
+            modelTree.refreshModel(model, null, ModelTree.MATCH_TYPE_NONE);
+        } catch (DocumentException e) {
 			e.printStackTrace();
 		}
 	}
