@@ -97,12 +97,14 @@ public class ModelTree extends JTree {
             return false;
         }
 
+        text = text.toUpperCase();
+
         for (String t : texts) {
             if (null == t) {
                 continue;
             }
 
-            if (t.contains(text)) {
+            if (t.toUpperCase().contains(text)) {
                 return true;
             }
         }
