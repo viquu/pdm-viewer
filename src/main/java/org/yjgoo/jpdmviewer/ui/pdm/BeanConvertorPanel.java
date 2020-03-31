@@ -4,9 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JButton;
-import javax.swing.JPanel;
-import javax.swing.JTextArea;
+import javax.swing.*;
 
 import org.yjgoo.jpdmviewer.pdm.TableModel;
 import org.yjgoo.jpdmviewer.pdm.code.JavaBeanGenerator;
@@ -32,8 +30,15 @@ public class BeanConvertorPanel extends JPanel implements DataCleanable {
 		createBtn.setText("Generator");
 		codeArea = new JTextArea();
 
+		JScrollPane scroll = new JScrollPane(codeArea);
+		//把定义的JTextArea放到JScrollPane里面去 
+
+		//分别设置水平和垂直滚动条自动出现 
+		scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+
 		this.add(createBtn, BorderLayout.NORTH);
-		this.add(codeArea, BorderLayout.CENTER);
+		this.add(scroll, BorderLayout.CENTER);
 
 		beanGenerator = new JavaBeanGenerator();
 
