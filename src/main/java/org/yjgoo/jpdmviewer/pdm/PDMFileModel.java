@@ -2,6 +2,8 @@ package org.yjgoo.jpdmviewer.pdm;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import org.dom4j.Document;
@@ -72,6 +74,15 @@ public class PDMFileModel {
 
 			instance.tml.add(tm);
 		}
+
+		// 对PDM的表名按NAME进行升序排序
+		Collections.sort(instance.tml, new Comparator<TableModel>() {
+			@Override
+			public int compare(TableModel o1, TableModel o2) {
+				return o1.getName().compareTo(o2.getName());
+			}
+
+		});
 		return instance;
 	}
 
