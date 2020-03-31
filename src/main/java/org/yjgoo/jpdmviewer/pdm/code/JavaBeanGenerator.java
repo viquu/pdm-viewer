@@ -3,6 +3,9 @@ package org.yjgoo.jpdmviewer.pdm.code;
 import org.yjgoo.jpdmviewer.pdm.ColumnModel;
 import org.yjgoo.jpdmviewer.pdm.TableModel;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class JavaBeanGenerator {
 	private JavaDbDataTypeMapping mapping = new JavaDbDataTypeMapping();
 
@@ -28,6 +31,10 @@ public class JavaBeanGenerator {
 
 	private String convertStyle(String code, boolean firstCharUpper) {
 		StringBuilder sb = new StringBuilder();
+
+		// 去除列前缀,如“VC_”,"C_"
+		code = code.substring(code.indexOf("_") + 1);
+
 		for (int i = 0; i < code.length(); i++) {
 			if (code.charAt(i) == '_') {
 				if (i + 1 < code.length()) {
